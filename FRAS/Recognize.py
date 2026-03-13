@@ -28,22 +28,8 @@ def recognize_attendence():
         return
     df = pd.read_csv(student_file)
     font = cv2.FONT_HERSHEY_SIMPLEX
-    col_names = ['Id', 'Name', 'Date', 'Time', 'Direction']
+    col_names = ['Id', 'Name', 'Date', 'Time']
     attendance = pd.DataFrame(columns=col_names)
-
-    print("\nSelect Attendance Mode:")
-    print("[1] Entry")
-    print("[2] Exit")
-    while True:
-        mode_choice = input("Enter Choice (1/2): ")
-        if mode_choice == '1':
-            selected_mode = "Entry"
-            break
-        elif mode_choice == '2':
-            selected_mode = "Exit"
-            break
-        else:
-            print("Invalid Choice")
 
     # Initialize and start realtime video capture
     cam = cv2.VideoCapture(0)
@@ -78,7 +64,7 @@ def recognize_attendence():
                 date = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d')
                 timeStamp = datetime.datetime.fromtimestamp(ts).strftime('%H:%M:%S')
                 aa = str(aa)[2:-2]
-                attendance.loc[len(attendance)] = [Id, aa, date, timeStamp, selected_mode]
+                attendance.loc[len(attendance)] = [Id, aa, date, timeStamp]
 
             tt = str(tt)[2:-2]
             if(100-conf) > 67:

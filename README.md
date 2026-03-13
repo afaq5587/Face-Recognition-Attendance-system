@@ -65,6 +65,11 @@ Software Used -
 
 #### Download or Clone the project
 
+First Download or Clone the Project on Your Local Machine.To download the project from github press **Download Zip**
+
+![Download Zip](https://github.com/kmhmubin/Face-Recognition-Attendance-System/blob/master/Document%20Metarial/Project%20demo%20images/download%20zip.png)
+
+or 
 
 You can clone the project with git bash.To clone the project using git bash first open the git bash and write the following code
 ```
@@ -130,29 +135,11 @@ a terminal in the project root:
   ```bash
   py FRAS/main.py
   ```
-* **Original Raspberry Pi script** (works on any platform once a dataset exists):
+* **Original Raspberry Pi script** (works on any platform once a dataset
+  exists):
   ```bash
   py "Raspberry Pi files/Main.py"
   ```
-
-### Modern Robotic Command Center (Recommended) :rocket:
-This project now features a premium, futuristic command center with a FastAPI backend and a React/Vite frontend.
-
-#### 1. Start the Backend API
-From the project root:
-```bash
-.\env\Scripts\python -m uvicorn backend.main:app --reload --port 8000
-```
-This serves the biometric data and video feed at `http://127.0.0.1:8000`.
-
-#### 2. Start the Robotic UI
-Navigate to the UI directory and start the dev server:
-```bash
-cd robotic_ui
-npm install
-npm run dev
-```
-Access the command center at `http://localhost:5173`.
 
 On Windows you'll see a warning about the missing `picamera` module – this
 is expected and harmless, the software will fall back to a USB webcam.  On
@@ -184,12 +171,19 @@ This project have some bugs.
 * <strike>Student Details: In student details folder the **StudentDetails.csv** file don't have ID & name column.This problem show when the program run first time and create the <stong>StudentDetails.csv</strong> file automatically. To soleve the problelm just open the file and add *ID & Name Column* in the file and save it.</strike>
 * Auto Attachment: This is not a problem actually. The problem is before sent auto mail we have to manually change the file name. I tried to automate the attachment but i faild.
 
+## Contribute :heart:
+--------------------------------------
+If you want to contribute in this project feel free to do that. A [contribution guideline](https://github.com/kmhmubin/Face-Recognition-Attendance-System/blob/master/Contributing%20Guidelines.md) will be a big help.
 
+Thanks you, for contributing.
+- [Adeetya Upadhyay](https://github.com/AdeetyaU)
+- [Ciro Iriarte](https://github.com/ciroiriarte)
+- [Shreyas More](https://github.com/staticshreyas)
 
 ## Credits :sparkling_heart:
 --------------------------------
-Thanks to [M.Afaq Latif](https://github.com/afaq5587) work with me.
+Thanks to [Farhat Tasnim](https://github.com/farhattasnim) work with me.
 
 ## Licence :scroll:
 ---------------------------------
-MIT © [M.Afaq Latif](https://github.com/afaq5587)
+MIT © [K.M.H. Mubin](https://github.com/kmhmubin)
