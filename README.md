@@ -65,11 +65,6 @@ Software Used -
 
 #### Download or Clone the project
 
-First Download or Clone the Project on Your Local Machine.To download the project from github press **Download Zip**
-
-![Download Zip](https://github.com/kmhmubin/Face-Recognition-Attendance-System/blob/master/Document%20Metarial/Project%20demo%20images/download%20zip.png)
-
-or 
 
 You can clone the project with git bash.To clone the project using git bash first open the git bash and write the following code
 ```
@@ -97,43 +92,73 @@ If your pc don't have virtual enviroment or pip install the follow this link.
 #### Installing the packages
 --------------------------------------------------
 
-After creating the enviroment on your project let's install the necessary packages. 
+After creating the environment, install the required libraries using the
+included requirements file. This will pull in only the packages used by the
+project and avoid version conflicts:
 
-![pip isntall demo](https://github.com/kmhmubin/Face-Recognition-Attendance-System/blob/master/Document%20Metarial/Project%20demo%20images/pip%20install_edit_0.gif)
-
-To install those package open the terminal or command line and paste the code from below
-
-```
-pip install opencv-contrib-python
-```
-```
-pip install numpy
-```
-```
-pip install pandas
-```
-```
-pip install Pillow
-```
-```
-pip install pytest-shutil
-```
-```
-pip install python-csv
-```
-```
-pip install yagmail
+```bash
+pip install -r FRAS/requirements.txt
 ```
 
-[ **Notice: During the package installization, sometime it shows some error, to avoid those error you can install those packages as admin. ]
+If you prefer to install individually you can still run the commands shown in
+the original screenshot, but using the `-r` file is easier and keeps the
+list up to date.
+
+> **Note:** the code uses OpenCV’s built-in Haar cascade for face detection.
+> Make sure `haarcascade_frontalface_default.xml` is available – it’s provided
+> with most OpenCV installs under `cv2.data.haarcascades`, or you can
+> download it from the OpenCV GitHub and place it next to the script. The
+> script will create the `Dataset` folder automatically if it doesn’t exist.
+>
+> **Raspberry Pi camera library:** the `picamera` package is only installable
+> on a Raspberry Pi running Linux. Attempting to `pip install picamera` on
+> Windows or macOS will produce errors such as
+> ``ValueError: Unable to open /proc/cpuinfo`` – these can be safely ignored;
+> the program already falls back to a USB webcam when the module is absent.
+> If you deploy on a Pi, install `picamera` there with `pip install picamera`
+> or use the newer [picamera2](https://pypi.org/project/picamera2/).
+
+[ **Notice: During installation, you may see permission errors; run the
+command as administrator or use a virtual environment to avoid them. ]
 
 ## Test Run :bicyclist:
 -----------------------
-After creating the enviroment and installing the packages, open the IDE terminal/command line to run the program. Using the code below.
+With the virtual environment active, run one of the two entry points from
+a terminal in the project root:
 
+* **Full menu interface (recommended on Windows)**:
+  ```bash
+  py FRAS/main.py
+  ```
+* **Original Raspberry Pi script** (works on any platform once a dataset exists):
+  ```bash
+  py "Raspberry Pi files/Main.py"
+  ```
+
+### Modern Robotic Command Center (Recommended) :rocket:
+This project now features a premium, futuristic command center with a FastAPI backend and a React/Vite frontend.
+
+#### 1. Start the Backend API
+From the project root:
+```bash
+.\env\Scripts\python -m uvicorn backend.main:app --reload --port 8000
 ```
-py main.py
+This serves the biometric data and video feed at `http://127.0.0.1:8000`.
+
+#### 2. Start the Robotic UI
+Navigate to the UI directory and start the dev server:
+```bash
+cd robotic_ui
+npm install
+npm run dev
 ```
+Access the command center at `http://localhost:5173`.
+
+On Windows you'll see a warning about the missing `picamera` module – this
+is expected and harmless, the software will fall back to a USB webcam.  On
+a Raspberry Pi you can install `picamera` to take full advantage of the
+Pi camera module.
+
 Here is a demo to run the program. I'm Using the Pycharm IDE in my demo.
 
 ![Test Run](https://github.com/kmhmubin/Face-Recognition-Attendance-System/blob/master/Document%20Metarial/Project%20demo%20images/code%20demo_edit_0.gif)
@@ -146,8 +171,11 @@ If you want to use it just follow the steps below.
 2. Import the project to your favourit IDE
 3. Create an python enviroment
 4. Install all the packages 
-5. Change the mail information
-6. Run the project using the command line or your IDE Run Button
+5. Capture some training images or import your own into the
+   `TrainingImage` folder.  You can do this via the menu option in
+   `FRAS/main.py` (select *Capture Faces*), or by placing JPEGs manually.
+6. Change the mail information if you intend to use the automail feature.
+7. Run the project using the command line or your IDE Run Button.
 
 ## Known Bugs :bug:
 ------------------------------
@@ -156,19 +184,12 @@ This project have some bugs.
 * <strike>Student Details: In student details folder the **StudentDetails.csv** file don't have ID & name column.This problem show when the program run first time and create the <stong>StudentDetails.csv</strong> file automatically. To soleve the problelm just open the file and add *ID & Name Column* in the file and save it.</strike>
 * Auto Attachment: This is not a problem actually. The problem is before sent auto mail we have to manually change the file name. I tried to automate the attachment but i faild.
 
-## Contribute :heart:
---------------------------------------
-If you want to contribute in this project feel free to do that. A [contribution guideline](https://github.com/kmhmubin/Face-Recognition-Attendance-System/blob/master/Contributing%20Guidelines.md) will be a big help.
 
-Thanks you, for contributing.
-- [Adeetya Upadhyay](https://github.com/AdeetyaU)
-- [Ciro Iriarte](https://github.com/ciroiriarte)
-- [Shreyas More](https://github.com/staticshreyas)
 
 ## Credits :sparkling_heart:
 --------------------------------
-Thanks to [Farhat Tasnim](https://github.com/farhattasnim) work with me.
+Thanks to [M.Afaq Latif](https://github.com/afaq5587) work with me.
 
 ## Licence :scroll:
 ---------------------------------
-MIT © [K.M.H. Mubin](https://github.com/kmhmubin)
+MIT © [M.Afaq Latif](https://github.com/afaq5587)

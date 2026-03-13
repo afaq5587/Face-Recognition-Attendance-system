@@ -9,7 +9,13 @@ newest = files[-1]
 filename = newest
 sub = "Attendance Report for " + str(date)
 # mail information
-yag = yagmail.SMTP("youremail@email.com", "password")
+# [IMPORTANT]: Update your email and app-specific password before running this feature.
+email_user = "aafqlatif804@gmail.com"
+email_pass = "password" # Use an app-specific password if using Gmail
+receiver = "afaqlatif082@gmail.com"
+body = "Please find the attached attendance report."
+
+yag = yagmail.SMTP(email_user, email_pass)
 
 # sent the mail
 yag.send(

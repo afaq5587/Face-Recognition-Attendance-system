@@ -1,1 +1,28 @@
-env
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python/
+env/
+venv/
+.idea/ # IDE specific files
+
+# Node.js
+node_modules/
+package-lock.json
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Logs
+*.log
+Raspberry Pi files/data_log.csv
+
+# Generated files
+TrainingImageLabel/Trainner.yml

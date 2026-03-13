@@ -1,9 +1,17 @@
 
+def _cascade_path(name='haarcascade_frontalface_default.xml'):
+    import cv2, os
+    p = os.path.join(cv2.data.haarcascades, name)
+    if os.path.isfile(p):
+        return p
+    return name
+
+
 def camer():
     import cv2
 
     # Load the cascade
-    face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+    face_cascade = cv2.CascadeClassifier(_cascade_path())
 
     # To capture video from webcam.
     cap = cv2.VideoCapture(0)

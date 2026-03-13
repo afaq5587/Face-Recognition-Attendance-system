@@ -47,15 +47,16 @@ def mainMenu():
                 RecognizeFaces()
                 break
             elif choice == 5:
-                os.system("py automail.py")
+                # run automail via python to ensure correct interpreter
+                import sys
+                os.system(f'"{sys.executable}" automail.py')
                 break
-                mainMenu()
             elif choice == 6:
                 print("Thank You")
-                break
+                sys.exit(0)
             else:
-                print("Invalid Choice. Enter 1-4")
-                mainMenu()
+                print("Invalid Choice. Enter 1-6")
+                # loop continues
         except ValueError:
             print("Invalid Choice. Enter 1-4\n Try Again")
     exit

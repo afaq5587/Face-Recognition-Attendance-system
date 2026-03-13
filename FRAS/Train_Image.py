@@ -5,6 +5,12 @@ import numpy as np
 from PIL import Image
 from threading import Thread
 
+def _cascade_path(name='haarcascade_frontalface_default.xml'):
+    p = os.path.join(cv2.data.haarcascades, name)
+    if os.path.isfile(p):
+        return p
+    return name
+
 
 
 # -------------- image labesl ------------------------
@@ -24,8 +30,11 @@ def getImagesAndLabels(path):
         pilImage = Image.open(imagePath).convert('L')
         # Now we are converting the PIL image into numpy array
         imageNp = np.array(pilImage, 'uint8')
-        # getting the Id from the image
-        Id = int(os.path.split(imagePath)[-1].split(".")[1])
+        # getting the Id from the image filename (second token)
+        try:
+            Id = int(os.path.split(imagePath)[-1].split(".")[1])
+        except (IndexError, ValueError):
+            continue
         # extract the face from the training image sample
         faces.append(imageNp)
         Ids.append(Id)
@@ -34,14 +43,23 @@ def getImagesAndLabels(path):
 
 # ----------- train images function ---------------
 def TrainImages():
-    recognizer = cv2.face_LBPHFaceRecognizer.create()
-    harcascadePath = "haarcascade_frontalface_default.xml"
+    train_dir = "TrainingImage"
+    label_dir = "TrainingImageLabel"
+    os.makedirs(train_dir, exist_ok=True)
+    os.makedirs(label_dir, exist_ok=True)
+
+    recognizer = cv2.face.LBPHFaceRecognizer_create()
+    harcascadePath = _cascade_path()
     detector = cv2.CascadeClassifier(harcascadePath)
-    faces, Id = getImagesAndLabels("TrainingImage")
-    Thread(target = recognizer.train(faces, np.array(Id))).start()
-    # Below line is optional for a visual counter effect
-    Thread(target = counter_img("TrainingImage")).start()
-    recognizer.save("TrainingImageLabel"+os.sep+"Trainner.yml")
+    faces, Ids = getImagesAndLabels(train_dir)
+    if not faces or not Ids:
+        print(f"No training images found in '{train_dir}'. Please capture faces first.")
+        return
+    # train recognizer synchronously
+    recognizer.train(faces, np.array(Ids))
+    # optional visual counter
+    counter_img(train_dir)
+    recognizer.save(os.path.join(label_dir, "Trainner.yml"))
     print("All Images")
 
 # Optional, adds a counter for images trained (You can remove it)

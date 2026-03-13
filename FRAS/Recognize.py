@@ -5,17 +5,45 @@ import time
 import cv2
 import pandas as pd
 
+def _cascade_path(name='haarcascade_frontalface_default.xml'):
+    p = os.path.join(cv2.data.haarcascades, name)
+    if os.path.isfile(p):
+        return p
+    return name
+
 
 #-------------------------
 def recognize_attendence():
     recognizer = cv2.face.LBPHFaceRecognizer_create()  # cv2.createLBPHFaceRecognizer()
-    recognizer.read("./TrainingImageLabel/Trainner.yml")
-    harcascadePath = "haarcascade_frontalface_default.xml"
+    model_path = os.path.join("TrainingImageLabel","Trainner.yml")
+    if not os.path.isfile(model_path):
+        print(f"Model file {model_path} not found. Train images first.")
+        return
+    recognizer.read(model_path)
+    harcascadePath = _cascade_path()
     faceCascade = cv2.CascadeClassifier(harcascadePath)
-    df = pd.read_csv("StudentDetails"+os.sep+"StudentDetails.csv")
+    student_file = os.path.join("StudentDetails","StudentDetails.csv")
+    if not os.path.isfile(student_file):
+        print(f"Student details file {student_file} not found.")
+        return
+    df = pd.read_csv(student_file)
     font = cv2.FONT_HERSHEY_SIMPLEX
-    col_names = ['Id', 'Name', 'Date', 'Time']
+    col_names = ['Id', 'Name', 'Date', 'Time', 'Direction']
     attendance = pd.DataFrame(columns=col_names)
+
+    print("\nSelect Attendance Mode:")
+    print("[1] Entry")
+    print("[2] Exit")
+    while True:
+        mode_choice = input("Enter Choice (1/2): ")
+        if mode_choice == '1':
+            selected_mode = "Entry"
+            break
+        elif mode_choice == '2':
+            selected_mode = "Exit"
+            break
+        else:
+            print("Invalid Choice")
 
     # Initialize and start realtime video capture
     cam = cv2.VideoCapture(0)
@@ -50,7 +78,7 @@ def recognize_attendence():
                 date = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d')
                 timeStamp = datetime.datetime.fromtimestamp(ts).strftime('%H:%M:%S')
                 aa = str(aa)[2:-2]
-                attendance.loc[len(attendance)] = [Id, aa, date, timeStamp]
+                attendance.loc[len(attendance)] = [Id, aa, date, timeStamp, selected_mode]
 
             tt = str(tt)[2:-2]
             if(100-conf) > 67:
